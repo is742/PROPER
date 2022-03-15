@@ -14,12 +14,12 @@ To use PROPER:
 2. Add the name and path of the .java file you want to parse in "PROPER.java"
 3. Annotate the code with information related to performance properties of interest, e.g., *//@time=1.5*
 4. Run "PROPER.java" as Java Application
-3. The generated model will be inside the [/models/](../models/) folder
+3. The generated model will be inside the [/models/](https://github.com/is742/PROPER/tree/master/models/) folder
 4. Use any prefered transition probability calculation method to obtain the probabilities and add them to the generated model
 5. Perform probabilistic model checking to evaluate the identified properties using model checkers such as the ones mentioned above
 
-Examples of models, property files and annotated code are provided in the project files. Additionally, we provide examples of how to extract the transition probabilities by simulating the execution of the selected Java code, using program [logs](../logs/).
+Examples of models, property files and annotated code are provided in the project files. Additionally, we provide examples of how to extract the transition probabilities by simulating the execution of the selected Java code, using program [logs](https://github.com/is742/PROPER/tree/master/logs/).
 
 To use the extended version of FACT:
 1. Information on installing FACT and its dependencies can be found [here](https://www-users.cs.york.ac.uk/~cap/FACT/gettingstarted.html)
-2. The extended source code along with the case studies used in the evaluation are located at [/FACT-extended_version/](../FACT-extended_version/)  
+2. The extended source code along with the case studies used in the evaluation are located at [/FACT-extended_version/](https://github.com/is742/PROPER/tree/master/FACT-extended_version/)  
