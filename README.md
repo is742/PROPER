@@ -21,5 +21,5 @@ To use PROPER:
 Examples of models, property files and annotated code are provided in the project files. Additionally, we provide examples of how to extract the transition probabilities by simulating the execution of the selected Java code, using program [logs](../logs/).
 
 To use the extended version of FACT:
-1. Information on installing FACT and its dependencies can be found [here](https://www-users.cs.york.ac.uk/~cap/FACT/gettingstarted.html).
-2. The extended source code along with the case studies used in the evaluation are located at [/FACT-extended_version/](../FACT-extended_version/).  
+1. Information on installing FACT and its dependencies can be found [here](https://www-users.cs.york.ac.uk/~cap/FACT/gettingstarted.html)
+2. The extended source code along with the case studies used in the evaluation are located at [/FACT-extended_version/](../FACT-extended_version/)  
