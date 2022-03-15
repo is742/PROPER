@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="400.0" maxWidth="453.0" minHeight="103.0" minWidth="300.0" prefHeight="164.0" prefWidth="453.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.PrefController">
+   <children>
+      <Button fx:id="btnOK" layoutX="251.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleOk" text="OK" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <Button fx:id="btnCancel" layoutX="191.0" layoutY="364.0" mnemonicParsing="false" onAction="#handleCancel" text="Cancel" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="50.0" />
+      <Label layoutX="10.0" layoutY="10.0" text="PRISM Location" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0" />
+      <TextField fx:id="txtPRISMLocation" layoutX="10.0" layoutY="37.0" prefHeight="26.0" prefWidth="431.0" text="/Users/UserName/Documents/prism-4.2.beta1-osx64/bin/prism" />
+   </children>
+</AnchorPane>

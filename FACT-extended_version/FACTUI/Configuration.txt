@@ -1,0 +1,5 @@
+lowerCI,90
+PRISMLocation,/Users/ioannis/Documents/prism-4.4-osx64/bin/prism
+upperCI,99
+stepCI,1.0
+hillClimbingMax,0

@@ -1,0 +1,87 @@
+!--**--
+// Model 3 for A&E abstraction
+// 18th March 2015
+
+
+ctmc
+
+const int q_max = 10;
+
+const double rate_arrive; // patients per hour arriving
+const double rate_assess = 8; // patients assessed per hour [R - this and the three other parameters below are rates, i.e., 8 patients are treated only if they are present]
+const double rate_test = 6; // tests run per hour
+const double rate_treat = 5; // patients treated per hour
+const double rate_prepare = 60; // rate to prepare for seeing new patient
+const double rate_reqTest = 60; // rate to complete test request
+
+const double pdischarge = 0.3; // probability that a patient once assessed will be discharged.
+const double ptest = 0.2; // probability of requiring a test
+const double ptreat = 0.5; // probability of being treated dfirectly after assessment without tests
+
+module AssessmentQueue 
+	q : [0..q_max] init 0;
+	
+	[newPatient] true -> rate_arrive : (q' = min(q+1, q_max));
+	[assess1]    q>0 -> (q'=q-1); 
+	[assess2]    q>0 -> (q'=q-1); 
+	[assess3]    q>0 -> (q'=q-1); 
+endmodule
+
+module doctor1
+  d1 : [0..3] init 0; // 0: idle, 1:assessing,  2: treating, 3: requesting tests
+
+  // Someone is in the queue so an assessment is required.
+  // After assessment they will be a) discharged, b) treated, c) tests requested.
+  [assess1]          d1=1 -> pdischarge*rate_assess : (d1'=0) + ptest*rate_assess : (d1'= 3) + ptreat*rate_assess : (d1'=2);
+
+  [allocateAssess1]  d1=0 & qTreat=0 -> rate_prepare : (d1'=1); // give priority to patients awaiting treatment
+  [allocateTreat1]   d1=0 -> rate_prepare : (d1'=2);
+
+  [requestTest1]     d1=3 -> rate_reqTest : (d1'=0);
+  [treat1]           d1=2 -> rate_treat : (d1'=0);
+endmodule
+
+module doctor2 = doctor1 [ d1=d2, allocateAssess1=allocateAssess2, allocateTreat1=allocateTreat2, assess1=assess2, requestTest1=requestTest2, treat1=treat2 ] endmodule
+module doctor3 = doctor1 [ d1=d3, allocateAssess1=allocateAssess3, allocateTreat1=allocateTreat3, assess1=assess3, requestTest1=requestTest3, treat1=treat3 ] endmodule
+
+module testQueue
+  qTest : [0..q_max] init 0;  // patients waiting for test
+  qTreat : [0..q_max] init 0; // patients with test results and waiting for treatment
+
+  [requestTest1] true -> (qTest' = min(qTest+1, q_max));
+  [requestTest2] true -> (qTest' = min(qTest+1, q_max));
+  [requestTest3] true -> (qTest' = min(qTest+1, q_max));
+
+  [test]         qTest>0 -> rate_test : (qTest'=qTest-1) & (qTreat'=min(qTreat+1,q_max)); // test run, move them onto the treatment queue.
+
+  // This is because when a patient moves from assess to treat they are not added to the treat queue, even though the doctor moves into the 
+  // treat state. If the doctor moves to treat state and the queue is empty then the doctor has no oportunity to return to idle without this 
+  // change.
+  [treat1]       qTreat>=0 -> (qTreat' = max(qTreat-1,0));
+  [treat2]       qTreat>=0 -> (qTreat' = max(qTreat-1,0));
+  [treat3]       qTreat>=0 -> (qTreat' = max(qTreat-1,0));
+endmodule
+
+const int T;
+
+rewards "doctorIdle"
+  d1=0 : 1;
+  d2=0 : 1;
+  d3=0 : 1;
+endrewards
+
+rewards "awaitingAssessment"
+  true : q;
+endrewards
+
+rewards "awaitingTreatment"
+  true : qTreat;
+endrewards
+
+rewards "sentHome"
+  [newPatient] q=q_max : 1;
+endrewards
+
+
+!--**--
+!--**--
